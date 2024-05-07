@@ -26,7 +26,7 @@ jobs:
                   git checkout $(git describe --tags --abbrev=0)
                   npm ci
                   npm run build:all
-                  node bin/typedoc --options ../typedoc.json --gitRevision $(git describe --tags --abbrev=0) --sitemapBaseUrl "https://docs.prosopo.io/"
+                  npx typedoc --options ../typedoc.json --gitRevision $(git describe --tags --abbrev=0) --sitemapBaseUrl "https://docs.prosopo.io/"
                   cd ..
 #            - name: Rebuild /example
 #              run: |
