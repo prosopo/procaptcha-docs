@@ -3,6 +3,7 @@ on:
     push:
         branches:
             - master
+            - main
     schedule:
         - cron: "0 12 * * *"
     workflow_dispatch:
@@ -18,25 +19,25 @@ jobs:
                   node-version: "20.12.1"
             - name: Install
               run: npm ci
-            - name: Rebuild /api
+            - name: Rebuild docs
               run: |
-                  git clone https://github.com/TypeStrong/typedoc.git
-                  cd typedoc
+                  git clone https://github.com/prosopo/captcha.git
+                  cd captcha
                   git checkout $(git describe --tags --abbrev=0)
                   npm ci
                   node scripts/set_strict.js false
                   npm run build
-                  node bin/typedoc --options ../typedoc.json --gitRevision $(git describe --tags --abbrev=0) --sitemapBaseUrl "https://typedoc.org/api/"
+                  node bin/typedoc --options ../typedoc.json --gitRevision $(git describe --tags --abbrev=0) --sitemapBaseUrl "https://docs.prosopo.io/"
                   cd ..
-            - name: Rebuild /example
-              run: |
-                  cd typedoc/example
-                  npm ci
-                  node ../bin/typedoc --options ../../example.typedoc.json --gitRevision $(git describe --tags --abbrev=0) --sitemapBaseUrl "https://typedoc.org/example/"
-                  cd ../..
+#            - name: Rebuild /example
+#              run: |
+#                  cd captcha/example
+#                  npm ci
+#                  node ../bin/typedoc --options ../../example.typedoc.json --gitRevision $(git describe --tags --abbrev=0) --sitemapBaseUrl "https://docs.prosopo.io/"
+#                  cd ../..
             - name: Rebuild schema.json
               run: |
-                  cd typedoc
+                  cd captcha
                   node scripts/generate_options_schema.js ../_site/schema.json
                   cd ..
             - name: Rebuild markdown site
