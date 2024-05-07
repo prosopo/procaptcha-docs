@@ -25,7 +25,7 @@ jobs:
                   cd captcha
                   git checkout $(git describe --tags --abbrev=0)
                   npm ci
-                  npm run build
+                  npm run build:all
                   node bin/typedoc --options ../typedoc.json --gitRevision $(git describe --tags --abbrev=0) --sitemapBaseUrl "https://docs.prosopo.io/"
                   cd ..
 #            - name: Rebuild /example
@@ -34,11 +34,11 @@ jobs:
 #                  npm ci
 #                  node ../bin/typedoc --options ../../example.typedoc.json --gitRevision $(git describe --tags --abbrev=0) --sitemapBaseUrl "https://docs.prosopo.io/"
 #                  cd ../..
-            - name: Rebuild schema.json
-              run: |
-                  cd captcha
-                  node scripts/generate_options_schema.js ../_site/schema.json
-                  cd ..
+#            - name: Rebuild schema.json
+#              run: |
+#                  cd captcha
+#                  node scripts/generate_options_schema.js ../_site/schema.json
+#                  cd ..
             - name: Rebuild markdown site
               run: npm run build
             - name: Deploy
